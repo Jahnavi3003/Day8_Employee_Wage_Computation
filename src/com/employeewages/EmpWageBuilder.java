@@ -2,77 +2,50 @@ package com.employeewages;
 
 public class EmpWageBuilder {
 	
-	public static final int fulltime = 1;
-	public static final int parttime = 2;
-	
 	private String companyName;
-    private int empRatePerHour;
+    int empRatePerHour;
     private int noOfWorkDays;
     private int maxHrsPerMonth;
     private int totalEmpWage;
     
     public EmpWageBuilder(String companyName, int empRatePerHour, int noOfWorkDays, int maxHrsPerMonth ) {
+    	super();
     	this.companyName=companyName;
     	this.empRatePerHour=empRatePerHour;
     	this.noOfWorkDays=noOfWorkDays;
     	this.maxHrsPerMonth=maxHrsPerMonth;
     }
     
-    public int emp_wage() {
+    public int getTotalEmpWage() {
+		return totalEmpWage;
+    }
+		
+		 public int getmaxHrsPerMonth() {
+				return maxHrsPerMonth;
+	}
 
-       
-        int empHrs = 0;
-        int empWage = 0;
-        
-        int totalEmpHrs = 0;
-        int numOfDays = 0;
+	public void setTotalEmpWage(int totalEmpWage) {
+		this.totalEmpWage = totalEmpWage;
+	}
+	
+    @Override
+    public String toString() {
+ 	   return companyName + " employee total wage :- " + totalEmpWage;
+    }
 
-       
-        while (totalEmpHrs <= maxHrsPerMonth && numOfDays < noOfWorkDays ) {
-           numOfDays++;
-           int empCheck = (int) Math.floor(Math.random()*3);
-           switch (empCheck) {
-              case fulltime:
-                 empHrs = 8;
-                 break;
-              case parttime:
-                 empHrs = 4;
-                 break;
-              default:
-                 empHrs = 0;
-              }
-       
-           totalEmpHrs += empHrs;
-           empWage = totalEmpHrs * empRatePerHour;
-           totalEmpWage = totalEmpWage + empWage;
-        }
-        return totalEmpWage;
-     }
-     
-     @Override
-     public String toString() {
-  	   return companyName + " employee total wage :- " + totalEmpWage;
-     }
- 
 		
 	
+ 
 	public static void main(String[] args) {
 		
 			   
-			   EmpWageBuilder SLMP = new EmpWageBuilder("SLMP" , 20 , 100 , 40);
-			   SLMP.emp_wage();
+			   EmpWageBuilder SLMP = new EmpWageBuilder();
 			   
-			   System.out.println(SLMP + "\n");
+			   SLMP.addEmpWageBuilder("DELL", 20, 100, 40);
+			   SLMP.addEmpWageBuilder("APPLE", 22, 90, 30);
+			   SLMP.addEmpWageBuilder("Lenovo", 25, 80, 20);
 			   
-			   EmpWageBuilder Apple = new EmpWageBuilder("Apple", 22 , 90 , 30);
-			   Apple.emp_wage();
-			   
-			   System.out.println(Apple + "\n");
-			   
-			   EmpWageBuilder Dell = new EmpWageBuilder("Dell", 22 , 90 , 30);
-			   Dell.emp_wage();
-			   
-			   System.out.println(Dell + "\n");	   
-			}
+			   SLMP.computation_of_emp_wage(); 
 
+}
 }
