@@ -46,11 +46,29 @@ public class EmpWageBuilder {
 			
 		}
 		return companyEmpWage.totalempwage;
+		
 	}
+	
+	public void getTotalWage(String company) {
+		   for(int i = 0; i < companyEmpWageList.size(); i++) {
+			  String name = companyEmpWageList.get(i).company;
+			   if(name.equals(company)) {
+				 int totalWage = companyEmpWageList.get(i).totalempwage;
+				 System.out.println(company + " employee total wage :- " + totalWage);
+				 break;  
+			   }
+			   else {
+				   continue;
+			   }
+		   }
+	   }	
+	
 	public static void main(String[] args) {
 		EmpWageBuilder empwage=new EmpWageBuilder();
 		empwage.addCompanyEmpWage("Jio",20,2,10);
 		empwage.addCompanyEmpWage("Airtel",10,4,20);
 		empwage.computeEmpWage();
+		
+		empwage.getTotalWage("Jio");
      }
 }
