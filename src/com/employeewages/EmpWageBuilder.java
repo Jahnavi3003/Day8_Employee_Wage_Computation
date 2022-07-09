@@ -1,55 +1,52 @@
 package com.employeewages;
 
-interface interface_empWageBuilder {
-	public abstract void addEmpWageBuilder(String company_name, int totalWorkDays, int maxHrsPMonth, int empRatePHr);
-
-	public abstract void computation_of_emp_wage();
-} 
-
+import java.util.ArrayList;
 
 public class EmpWageBuilder {
-	final String company_name;
-    final int totalWorkDays;
-    final int maxHrsPMonth; 
-    final int empRatePHr;
-    
-    int totalEmpWage;
-
-   
-	public EmpWageBuilder(String company_name, int totalWorkDays, int maxHrsPMonth, int empRatePHr) {
-		super();
-		this.company_name = company_name;
-		this.totalWorkDays = totalWorkDays;
-		this.maxHrsPMonth = maxHrsPMonth;
-		this.empRatePHr = empRatePHr;
-	}
-
+	public static final int is_part_time=1;
+	public static final int is_full_time=2;
 	
-	public int getTotalEmpWage() {
-		return totalEmpWage;
-	}
-
-	public void setTotalEmpWage(int totalEmpWage) {
-		this.totalEmpWage = totalEmpWage;
-	}
-    
+	private int numofcompany=0;
+	private ArrayList<CompanyEmpWage> companyEmpWageList;
 	
-	@Override
-	public String toString() {
-		return company_name + " employee total wage :- " + totalEmpWage;
+	public EmpWageBuilder() {
+		companyEmpWageList=new ArrayList<>();
 	}
-
-public static void main(String[] args) {
-	   System.out.println("WELCOME TO EMPLOYEE WAGE COMPUTATION PROGRAM.\n");
-	   
-	   interface_empWageBuilder object = new empWageBuilder(); 
-	   
-	   
-	   object.addEmpWageBuilder("DELL", 20, 100, 40);
-	   object.addEmpWageBuilder("APPLE", 22, 90, 30);
-	   object.addEmpWageBuilder("LENOVO", 25, 80, 20);
-	   
-	   object.computation_of_emp_wage(); 
-	   
+	public void addCompanyEmpWage(String company,int emprateperhr, int numofworkingdays, int maxhrspermonth) {
+		CompanyEmpWage companyEmpWage=new CompanyEmpWage(company,emprateperhr,numofworkingdays,maxhrspermonth);
+		companyEmpWageList.add(companyEmpWage);
 	}
+	public void computeEmpWage() {
+		for(int i=0; i<companyEmpWageList.size(); i++) {
+			CompanyEmpWage companyEmpWage=companyEmpWageList.get(i);
+			companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
+			System.out.println(companyEmpWage);
+		}
+	}
+	public int computeEmpWage(CompanyEmpWage companyEmpWage) {
+		int emphrs=0, totalemphrs=0, totalworkingdays=0;
+		while(totalemphrs<=companyEmpWage.maxhrspermonth && totalworkingdays<companyEmpWage.numofworkingdays) {
+			totalworkingdays++;
+			int empCheck=(int) Math.floor(Math.random()*10) % 3;
+			switch(empCheck) {
+			case is_full_time:
+				emphrs=4;
+				break;
+			case is_part_time:
+				emphrs=8;
+				break;
+			default:
+				emphrs=0;
+			}
+			totalemphrs += emphrs;
+			System.out.println("Day#:" + totalworkingdays + "Emp hr: " + emphrs);
+		}
+		return totalemphrs*companyEmpWage.emprateperhr;
+	}
+	public static void main(String[] args) {
+		EmpWageBuilder empwage=new EmpWageBuilder();
+		empwage.addCompanyEmpWage("Jio",20,2,10);
+		empwage.addCompanyEmpWage("Airtel",10,4,20);
+		empwage.computeEmpWage();
+     }
 }
