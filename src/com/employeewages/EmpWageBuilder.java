@@ -6,6 +6,7 @@ public class EmpWageBuilder {
 	public static final int is_part_time=1;
 	public static final int is_full_time=2;
 	
+	
 	private int numofcompany=0;
 	private ArrayList<CompanyEmpWage> companyEmpWageList;
 	
@@ -24,7 +25,7 @@ public class EmpWageBuilder {
 		}
 	}
 	public int computeEmpWage(CompanyEmpWage companyEmpWage) {
-		int emphrs=0, totalemphrs=0, totalworkingdays=0;
+		int emphrs=0, totalemphrs=0, totalworkingdays=0, empWage=0;
 		while(totalemphrs<=companyEmpWage.maxhrspermonth && totalworkingdays<companyEmpWage.numofworkingdays) {
 			totalworkingdays++;
 			int empCheck=(int) Math.floor(Math.random()*10) % 3;
@@ -39,9 +40,12 @@ public class EmpWageBuilder {
 				emphrs=0;
 			}
 			totalemphrs += emphrs;
-			System.out.println("Day#:" + totalworkingdays + "Emp hr: " + emphrs);
+			empWage= totalemphrs*companyEmpWage.emprateperhr;
+			companyEmpWage.totalempwage=companyEmpWage.totalempwage + empWage;
+			System.out.println(companyEmpWage.company + " Day :" + totalworkingdays + "wage: " + empWage + " and Emp hr: " + emphrs);
+			
 		}
-		return totalemphrs*companyEmpWage.emprateperhr;
+		return companyEmpWage.totalempwage;
 	}
 	public static void main(String[] args) {
 		EmpWageBuilder empwage=new EmpWageBuilder();
